@@ -115,17 +115,24 @@ spec:
                 imageNamespace:
                   title: Quay.io Namespace
                   type: string
+                  default: glamplv0
                   description: The Quay.io namespace or organization
-                  ui:field: Secret
+                  ui:field: text
                 quayUserName:
                   title: Quay.io username
                   type: string
+                  default: glamplv
                   description: The Quay.io username
-                  ui:field: Secret
+                  ui:field: text
                 quayPassword:
                   title: Quay password
                   type: string
                   description: The Quay.io password / token
+                  ui:field: Secret
+                repoToken:
+                  title: Repo Token
+                  type: string
+                  description: Git Hub Token
                   ui:field: Secret
             - required:
                 - imageRepository
@@ -151,6 +158,7 @@ spec:
                 namespace:
                   title: Namespace
                   type: string
+                  default: repo1
                   description: The namespace for deploying resources
   steps:
     - id: sourceCodeTemplate
@@ -239,10 +247,11 @@ spec:
         requiredApprovingReviewCount: 0
         secrets:
           REGISTRY_NAMESPACE: "${{ secrets.imageNamespace }}"
-          REGISTRY_USERNAME: "${{ secrets.quayUserName }}"
+          REGISTRY_USERNAME: "${{ parameters.quayUserName }}"
           REGISTRY_PASSWORD: "${{ secrets.quayPassword }}"
           REGISTRY_URI: "${{ parameters.imageRepository }}"
           GITOPS_REPO: "${{ parameters.orgName }}/${{parameters.repoName}}-gitops"
+          REPO_TOKEN: "${{ secrets.repoToken }}"
 
     - id: register
       name: Registering the Catalog Info Component
