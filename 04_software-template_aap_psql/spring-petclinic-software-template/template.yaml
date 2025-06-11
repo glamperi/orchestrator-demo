@@ -250,7 +250,7 @@ spec:
         repoVisibility: public
         requiredApprovingReviewCount: 0
         secrets:
-          REGISTRY_NAMESPACE: "${{ secrets.imageNamespace }}"
+          REGISTRY_NAMESPACE: "${{ parameters.imageNamespace }}"
           REGISTRY_USERNAME: "${{ parameters.quayUserName }}"
           REGISTRY_PASSWORD: "${{ secrets.quayPassword }}"
           REGISTRY_URI: "${{ parameters.imageRepository }}"
