@@ -1,8 +1,8 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: my-spring-petclinic-template
-  title: Create a Spring Pet Clinic application with GitHub Action & Argo CD
+  name: my-spring-petclinic-template 
+  title: Create a Spring Pet Clinic application with GitHub Action & Argo CD (V1)
   description: Create a Spring Pet Clinic application with GitHub Action & Argo CD
   tags:
     - recommended
@@ -24,15 +24,19 @@ spec:
         - port
       properties:
         orgName:
-          title: Organization Name
+          title: Github Organization Name
           type: string
+          default: glamperi
         repoName:
-          title: Repository Name
+          title: GitHub Repository Name (to create)
           type: string
+          default: repo1
         description:
           title: Description
           type: string
           description: Help others understand what this component is for
+          default: spring petclinic software app (to be created by Orchestrator)
+
         owner:
           title: Owner
           type: string
