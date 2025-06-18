@@ -1,8 +1,8 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: my-spring-petclinic-template 
-  title: Create a Spring Pet Clinic application with GitHub Action & Argo CD (V1)
+  name: my-spring-petclinic-template
+  title: Create a Spring Pet Clinic application with GitHub Action & Argo CD
   description: Create a Spring Pet Clinic application with GitHub Action & Argo CD
   tags:
     - recommended
@@ -24,19 +24,15 @@ spec:
         - port
       properties:
         orgName:
-          title: Github Organization Name
+          title: Organization Name
           type: string
-          default: glamperi
         repoName:
-          title: GitHub Repository Name (to create)
+          title: Repository Name
           type: string
-          default: repo1
         description:
           title: Description
           type: string
           description: Help others understand what this component is for
-          default: spring petclinic software app (to be created by Orchestrator)
-
         owner:
           title: Owner
           type: string
@@ -119,24 +115,17 @@ spec:
                 imageNamespace:
                   title: Quay.io Namespace
                   type: string
-                  default: glamplv0
                   description: The Quay.io namespace or organization
-                  ui:field: text
+                  ui:field: Secret
                 quayUserName:
                   title: Quay.io username
                   type: string
-                  default: glamplv
                   description: The Quay.io username
-                  ui:field: text
+                  ui:field: Secret
                 quayPassword:
                   title: Quay password
                   type: string
                   description: The Quay.io password / token
-                  ui:field: Secret
-                repoToken:
-                  title: Repo Token
-                  type: string
-                  description: Git Hub Token
                   ui:field: Secret
             - required:
                 - imageRepository
@@ -162,7 +151,6 @@ spec:
                 namespace:
                   title: Namespace
                   type: string
-                  default: repo1
                   description: The namespace for deploying resources
   steps:
     - id: sourceCodeTemplate
@@ -250,12 +238,11 @@ spec:
         repoVisibility: public
         requiredApprovingReviewCount: 0
         secrets:
-          REGISTRY_NAMESPACE: "${{ parameters.imageNamespace }}"
-          REGISTRY_USERNAME: "${{ parameters.quayUserName }}"
+          REGISTRY_NAMESPACE: "${{ secrets.imageNamespace }}"
+          REGISTRY_USERNAME: "${{ secrets.quayUserName }}"
           REGISTRY_PASSWORD: "${{ secrets.quayPassword }}"
           REGISTRY_URI: "${{ parameters.imageRepository }}"
           GITOPS_REPO: "${{ parameters.orgName }}/${{parameters.repoName}}-gitops"
-          REPO_TOKEN: "${{ secrets.repoToken }}"
 
     - id: register
       name: Registering the Catalog Info Component
